@@ -1,1 +1,1042 @@
+<!DOCTYPE html>
 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Species and Habitat Vulnerability Assessment System (SAVS)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+```
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f8f9fa;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .header {
+        background: linear-gradient(135deg, #2c5530, #4a7c59);
+        color: white;
+        padding: 30px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .header h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+    }
+
+    .header p {
+        font-size: 1.1em;
+        opacity: 0.9;
+    }
+
+    .category {
+        background: white;
+        margin-bottom: 30px;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        border-left: 5px solid #4a7c59;
+    }
+
+    .category-title {
+        background: #4a7c59;
+        color: white;
+        padding: 20px;
+        font-size: 1.4em;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+
+    .question-container {
+        padding: 25px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .question-container:last-child {
+        border-bottom: none;
+    }
+
+    .question-text {
+        font-weight: 600;
+        margin-bottom: 15px;
+        font-size: 1.1em;
+        color: #2c5530;
+    }
+
+    .question-description {
+        color: #666;
+        font-size: 0.95em;
+        margin-bottom: 15px;
+        font-style: italic;
+    }
+
+    .options-container {
+        margin-bottom: 20px;
+    }
+
+    .option {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 5px;
+        transition: background-color 0.2s;
+    }
+
+    .option:hover {
+        background-color: #f8f9fa;
+    }
+
+    .option input[type="radio"] {
+        margin-right: 10px;
+        margin-top: 3px;
+    }
+
+    .option label {
+        cursor: pointer;
+        flex: 1;
+    }
+
+    .uncertainty-section {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 5px;
+        margin-top: 15px;
+    }
+
+    .uncertainty-title {
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: #2c5530;
+    }
+
+    .uncertainty-options {
+        display: flex;
+        gap: 20px;
+    }
+
+    .uncertainty-option {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .controls {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .btn {
+        padding: 12px 30px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin: 0 10px;
+        font-weight: 600;
+    }
+
+    .btn-primary {
+        background: #4a7c59;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background: #2c5530;
+        transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+        background: #6c757d;
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        background: #5a6268;
+        transform: translateY(-2px);
+    }
+
+    .error-message {
+        background: #f8d7da;
+        color: #721c24;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        border: 1px solid #f5c6cb;
+    }
+
+    .results {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        margin-top: 30px;
+    }
+
+    .results h2 {
+        color: #2c5530;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .scores-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 30px;
+    }
+
+    .scores-table th,
+    .scores-table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .scores-table th {
+        background: #f8f9fa;
+        font-weight: 600;
+        color: #2c5530;
+    }
+
+    .chart-container {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+
+    .chart-title {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #2c5530;
+        font-weight: 600;
+    }
+
+    .chart {
+        display: flex;
+        align-items: end;
+        justify-content: space-around;
+        height: 300px;
+        border-bottom: 2px solid #333;
+        border-left: 2px solid #333;
+        position: relative;
+        margin: 20px;
+    }
+
+    .chart-bar {
+        width: 60px;
+        background: linear-gradient(to top, #4a7c59, #6fa16f);
+        margin: 0 10px;
+        position: relative;
+        border-radius: 4px 4px 0 0;
+    }
+
+    .chart-bar.negative {
+        background: linear-gradient(to bottom, #d73027, #f47068);
+    }
+
+    .chart-label {
+        position: absolute;
+        bottom: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.8em;
+        font-weight: 600;
+    }
+
+    .chart-value {
+        position: absolute;
+        top: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.9em;
+        font-weight: 600;
+    }
+
+    .chart-axis {
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: #666;
+        top: 50%;
+    }
+
+    .chart-axis-label {
+        position: absolute;
+        left: -30px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 0.8em;
+        font-weight: 600;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .interpretation {
+        background: #e8f5e8;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 20px;
+        border-left: 5px solid #4a7c59;
+    }
+
+    .interpretation h3 {
+        color: #2c5530;
+        margin-bottom: 15px;
+    }
+
+    .interpretation p {
+        margin-bottom: 10px;
+        line-height: 1.6;
+    }
+</style>
+```
+
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Species and Habitat Vulnerability Assessment System</h1>
+            <p>Climate Change Vulnerability Assessment Tool</p>
+        </div>
+
+```
+    <nav class="navigation">
+        <div class="nav-container">
+            <h2>Tool Resources</h2>
+            <div class="nav-links">
+                <a href="#assessment-tool" class="nav-link active">Assessment Tool</a>
+                <a href="background.html" class="nav-link">Background & Methods</a>
+                <a href="prework.html" class="nav-link">Data Requirements</a>
+                <a href="interpretation.html" class="nav-link">Score Interpretation</a>
+                <a href="examples.html" class="nav-link">Examples & Applications</a>
+            </div>
+        </div>
+    </nav>
+
+    <div id="error-container"></div>
+
+    <form id="savs-form">
+        <!-- HABITAT CATEGORY -->
+        <div class="category">
+            <div class="category-title">HABITAT</div>
+            
+            <div class="question-container">
+                <div class="question-text">H1. Area and distribution: breeding</div>
+                <div class="question-description">Is the area or location of the associated vegetation type used for breeding activities by this species expected to change? Specific habitat elements and food resources are considered in other questions.</div>
+                <div class="options-container">
+                    <div class="option">
+                        <input type="radio" id="h1_a" name="h1" value="1">
+                        <label for="h1_a">Area used for breeding habitat expected to decline or shift from current location</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="h1_b" name="h1" value="0">
+                        <label for="h1_b">Area used for breeding habitat expected to stay the same and in approximately the same location</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="h1_c" name="h1" value="-1">
+                        <label for="h1_c">Area used for breeding habitat expected to increase and include the current location</label>
+                    </div>
+                </div>
+                <div class="uncertainty-section">
+                    <div class="uncertainty-title">Information is...</div>
+                    <div class="uncertainty-options">
+                        <div class="uncertainty-option">
+                            <input type="radio" id="h1_unc_a" name="h1_uncertainty" value="0">
+                            <label for="h1_unc_a">Adequate</label>
+                        </div>
+                        <div class="uncertainty-option">
+                            <input type="radio" id="h1_unc_b" name="h1_uncertainty" value="1">
+                            <label for="h1_unc_b">Not adequate or conflicting</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <div class="question-text">H2. Area and distribution: non-breeding</div>
+                <div class="question-description">Is the area or location of the associated vegetation type used for non-breeding activities by this species expected to change?</div>
+                <div class="options-container">
+                    <div class="option">
+                        <input type="radio" id="h2_a" name="h2" value="1">
+                        <label for="h2_a">Area used for non-breeding habitat expected to decline or shift from current location</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="h2_b" name="h2" value="0">
+                        <label for="h2_b">Area used for non-breeding habitat expected to stay the same in approximately the same location</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="h2_c" name="h2" value="-1">
+                        <label for="h2_c">Area used for non-breeding habitat expected to increase and include the current location</label>
+                    </div>
+                </div>
+                <div class="uncertainty-section">
+                    <div class="uncertainty-title">Information is...</div>
+                    <div class="uncertainty-options">
+                        <div class="uncertainty-option">
+                            <input type="radio" id="h2_unc_a" name="h2_uncertainty" value="0">
+                            <label for="h2_unc_a">Adequate</label>
+                        </div>
+                        <div class="uncertainty-option">
+                            <input type="radio" id="h2_unc_b" name="h2_uncertainty" value="1">
+                            <label for="h2_unc_b">Not adequate or conflicting</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <div class="question-text">H3. Habitat components: breeding</div>
+                <div class="question-description">Are specific habitat components required for breeding expected to change within the associated vegetation type?</div>
+                <div class="options-container">
+                    <div class="option">
+                        <input type="radio" id="h3_a" name="h3" value="1">
+                        <label for="h3_a">Required breeding habitat components expected to decrease</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="h3_b" name="h3" value="0">
+                        <label for="h3_b">Required breeding habitat components unlikely to change OR habitat components required for breeding unknown</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="h3_c" name="h3" value="-1">
+                        <label for="h3_c">Required breeding habitat components expected to increase</label>
+                    </div>
+                </div>
+                <div class="uncertainty-section">
+                    <div class="uncertainty-title">Information is...</div>
+                    <div class="uncertainty-options">
+                        <div class="uncertainty-option">
+                            <input type="radio" id="h3_unc_a" name="h3_uncertainty" value="0">
+                            <label for="h3_unc_a">Adequate</label>
+                        </div>
+                        <div class="uncertainty-option">
+                            <input type="radio" id="h3_unc_b" name="h3_uncertainty" value="1">
+                            <label for="h3_unc_b">Not adequate or conflicting</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <div class="question-text">H4. Habitat components: non-breeding</div>
+                <div class="question-description">Are other specific habitat components required for survival during non-breeding periods expected to change within the associated vegetation type?</div>
+                <div class="options-container">
+                    <div class="option">
+                        <input type="radio" id="h4_a" name="h4" value="1">
+                        <label for="h4_a">Required non-breeding habitat components expected to decrease</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="h4_b" name="h4" value="0">
+                        <label for="h4_b">Required non-breeding habitat components unlikely to change OR habitat components required for breeding unknown</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="h4_c" name="h4" value="-1">
+                        <label for="h4_c">Required non-breeding habitat components expected to increase</label>
+                    </div>
+                </div>
+                <div class="uncertainty-section">
+                    <div class="uncertainty-title">Information is...</div>
+                    <div class="uncertainty-options">
+                        <div class="uncertainty-option">
+                            <input type="radio" id="h4_unc_a" name="h4_uncertainty" value="0">
+                            <label for="h4_unc_a">Adequate</label>
+                        </div>
+                        <div class="uncertainty-option">
+                            <input type="radio" id="h4_unc_b" name="h4_uncertainty" value="1">
+                            <label for="h4_unc_b">Not adequate or conflicting</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <div class="question-text">H5. Habitat quality</div>
+                <div class="question-description">Within habitats occupied, are features of the habitat associated with better reproductive success or survival expected to change?</div>
+                <div class="options-container">
+                    <div class="option">
+                        <input type="radio" id="h5_a" name="h5" value="1">
+                        <label for="h5_a">Projected changes are likely to negatively affect habitat features associated with improved reproductive success or survival</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="h5_b" name="h5" value="0">
+                        <label for="h5_b">Projected changes are unlikely to affect habitat features associated with improved reproductive success or survival</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="h5_c" name="h5" value="-1">
+                        <label for="h5_c">Projected changes are likely to positively affect habitat features associated with improved reproductive success or survival</label>
+                    </div>
+                </div>
+                <div class="uncertainty-section">
+                    <div class="uncertainty-title">Information is...</div>
+                    <div class="uncertainty-options">
+                        <div class="uncertainty-option">
+                            <input type="radio" id="h5_unc_a" name="h5_uncertainty" value="0">
+                            <label for="h5_unc_a">Adequate</label>
+                        </div>
+                        <div class="uncertainty-option">
+                            <input type="radio" id="h5_unc_b" name="h5_uncertainty" value="1">
+                            <label for="h5_unc_b">Not adequate or conflicting</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <div class="question-text">H6. Ability to colonize new areas</div>
+                <div class="question-description">What is the potential for this species to disperse?</div>
+                <div class="options-container">
+                    <div class="option">
+                        <input type="radio" id="h6_a" name="h6" value="1">
+                        <label for="h6_a">Low ability to disperse</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="h6_b" name="h6" value="0">
+                        <label for="h6_b">Mobile, but dispersal is sex-biased (only one sex disperses)</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="h6_c" name="h6" value="-1">
+                        <label for="h6_c">Very mobile, both sexes disperse</label>
+                    </div>
+                </div>
+                <div class="uncertainty-section">
+                    <div class="uncertainty-title">Information is...</div>
+                    <div class="uncertainty-options">
+                        <div class="uncertainty-option">
+                            <input type="radio" id="h6_unc_a" name="h6_uncertainty" value="0">
+                            <label for="h6_unc_a">Adequate</label>
+                        </div>
+                        <div class="uncertainty-option">
+                            <input type="radio" id="h6_unc_b" name="h6_uncertainty" value="1">
+                            <label for="h6_unc_b">Not adequate or conflicting</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <div class="question-text">H7. Migratory or transitional habitats</div>
+                <div class="question-description">Does this species require additional habitats during migration that are separated from breeding and non-breeding habitats?</div>
+                <div class="options-container">
+                    <div class="option">
+                        <input type="radio" id="h7_a" name="h7" value="1">
+                        <label for="h7_a">Additional habitats required that are separated from breeding and non-breeding habitats (e.g., most migratory species)</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="h7_b" name="h7" value="0">
+                        <label for="h7_b">No additional habitats required that are separated from breeding and non-breeding habitats (e.g., most resident species and short-distance migrants)</label>
+                    </div>
+                </div>
+                <div class="uncertainty-section">
+                    <div class="uncertainty-title">Information is...</div>
+                    <div class="uncertainty-options">
+                        <div class="uncertainty-option">
+                            <input type="radio" id="h7_unc_a" name="h7_uncertainty" value="0">
+                            <label for="h7_unc_a">Adequate</label>
+                        </div>
+                        <div class="uncertainty-option">
+                            <input type="radio" id="h7_unc_b" name="h7_uncertainty" value="1">
+                            <label for="h7_unc_b">Not adequate or conflicting</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PHYSIOLOGY CATEGORY -->
+        <div class="category">
+            <div class="category-title">PHYSIOLOGY</div>
+            
+            <div class="question-container">
+                <div class="question-text">PS1. Physiological thresholds</div>
+                <div class="question-description">Are limiting physiological conditions expected to change?</div>
+                <div class="options-container">
+                    <div class="option">
+                        <input type="radio" id="ps1_a" name="ps1" value="1">
+                        <label for="ps1_a">Projected changes in temperature and moisture are likely to exceed upper physiological thresholds (e.g., activities occur in very hot climates, amphibians in drier climates, species with narrow thermal range)</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="ps1_b" name="ps1" value="0">
+                        <label for="ps1_b">Projected changes in temperature or moisture will primarily remain within physiological thresholds OR species is inactive during limiting conditions (e.g., species with moderate thermal range, aestivators that avoid hot/dry conditions)</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="ps1_c" name="ps1" value="-1">
+                        <label for="ps1_c">Projected changes in temperature or moisture will decrease current incidents where lower thresholds are exceeded (e.g., species active in very cold climates, amphibians in wetter climates, species with very broad thermal range)</label>
+                    </div>
+                </div>
+                <div class="uncertainty-section">
+                    <div class="uncertainty-title">Information is...</div>
+                    <div class="uncertainty-options">
+                        <div class="uncertainty-option">
+                            <input type="radio" id="ps1_unc_a" name="ps1_uncertainty" value="0">
+                            <label for="ps1_unc_a">Adequate</label>
+                        </div>
+                        <div class="uncertainty-option">
+                            <input type="radio" id="ps1_unc_b" name="ps1_uncertainty" value="1">
+                            <label for="ps1_unc_b">Not adequate or conflicting</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <div class="question-text">PS2. Sex ratio</div>
+                <div class="question-description">Is sex ratio determined by temperature?</div>
+                <div class="options-container">
+                    <div class="option">
+                        <input type="radio" id="ps2_a" name="ps2" value="1">
+                        <label for="ps2_a">Yes.</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="ps2_b" name="ps2" value="0">
+                        <label for="ps2_b">No.</label>
+                    </div>
+                </div>
+                <div class="uncertainty-section">
+                    <div class="uncertainty-title">Information is...</div>
+                    <div class="uncertainty-options">
+                        <div class="uncertainty-option">
+                            <input type="radio" id="ps2_unc_a" name="ps2_uncertainty" value="0">
+                            <label for="ps2_unc_a">Adequate</label>
+                        </div>
+                        <div class="uncertainty-option">
+                            <input type="radio" id="ps2_unc_b" name="ps2_uncertainty" value="1">
+                            <label for="ps2_unc_b">Not adequate or conflicting</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <div class="question-text">PS3. Exposure to weather-related disturbance</div>
+                <div class="question-description">Are disturbance events (e.g., severe storms, fires, floods) that affect survival or reproduction expected to change?</div>
+                <div class="options-container">
+                    <div class="option">
+                        <input type="radio" id="ps3_a" name="ps3" value="1">
+                        <label for="ps3_a">Projected changes in disturbance events will likely decrease survival or reproduction</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="ps3_b" name="ps3" value="0">
+                        <label for="ps3_b">Survival and reproduction are not strongly affected by disturbance events OR disturbance events are not expected to change</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="ps3_c" name="ps3" value="-1">
+                        <label for="ps3_c">Projected changes in disturbance events will likely increase survival or reproduction</label>
+                    </div>
+                </div>
+                <div class="uncertainty-section">
+                    <div class="uncertainty-title">Information is...</div>
+                    <div class="uncertainty-options">
+                        <div class="uncertainty-option">
+                            <input type="radio" id="ps3_unc_a" name="ps3_uncertainty" value="0">
+                            <label for="ps3_unc_a">Adequate</label>
+                        </div>
+                        <div class="uncertainty-option">
+                            <input type="radio" id="ps3_unc_b" name="ps3_uncertainty" value="1">
+                            <label for="ps3_unc_b">Not adequate or conflicting</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <div class="question-text">PS4. Limitations to daily activity period</div>
+                <div class="question-description">Are projected temperature or precipitation regimes that influence the activity period of species expected to change?</div>
+                <div class="options-container">
+                    <div class="option">
+                        <input type="radio" id="ps4_a" name="ps4" value="1">
+                        <label for="ps4_a">Duration of daily active periods likely to be reduced (e.g., heliotherms in hot climates, terrestrial amphibians in drier climates)</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="ps4_b" name="ps4" value="0">
+                        <label for="ps4_b">Duration of daily active periods unchanged or not limited by climate (species in habitats buffered from extremes, nocturnal species, primarily aquatic amphibians)</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="ps4_c" name="ps4" value="-1">
+                        <label for="ps4_c">Duration of daily active periods likely to increase (e.g., heliotherms in cool climates, terrestrial amphibians in wetter climates)</label>
+                    </div>
+                </div>
+                <div class="uncertainty-section">
+                    <div class="uncertainty-title">Information is...</div>
+                    <div class="uncertainty-options">
+                        <div class="uncertainty-option">
+                            <input type="radio" id="ps4_unc_a" name="ps4_uncertainty" value="0">
+                            <label for="ps4_unc_a">Adequate</label>
+                        </div>
+                        <div class="uncertainty-option">
+                            <input type="radio" id="ps4_unc_b" name="ps4_uncertainty" value="1">
+                            <label for="ps4_unc_b">Not adequate or conflicting</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <div class="question-text">PS5. Survival during resource fluctuation</div>
+                <div class="question-description">Does this species have flexible strategies to cope with variation in resources across multiple years?</div>
+                <div class="options-container">
+                    <div class="option">
+                        <input type="radio" id="ps5_a" name="ps5" value="1">
+                        <label for="ps5_a">Species has no flexible strategies to cope with variable resources across multiple years</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="ps5_b" name="ps5" value="-1">
+                        <label for="ps5_b">Species has flexible strategies to cope with variable resources across multiple years (e.g., alternative life form, irruptive, explosive breeding, cooperative breeding)</label>
+                    </div>
+                </div>
+                <div class="uncertainty-section">
+                    <div class="uncertainty-title">Information is...</div>
+                    <div class="uncertainty-options">
+                        <div class="uncertainty-option">
+                            <input type="radio" id="ps5_unc_a" name="ps5_uncertainty" value="0">
+                            <label for="ps5_unc_a">Adequate</label>
+                            </div>
+                            <div class="uncertainty-option">
+                                <input type="radio" id="ps5_unc_b" name="ps5_uncertainty" value="1">
+                                <label for="ps5_unc_b">Not adequate or conflicting</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-container">
+                    <div class="question-text">PS6.  Energy requirements</div>
+                    <div class="question-description">What is this species’ metabolic rate? </div>
+                    <div class="options-container">
+                        <div class="option">
+                            <input type="radio" id="ps6_a" name="ps6" value="1">
+                            <label for="ps6_a">Very high metabolic rates (e.g., shrews, hummingbirds)</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="ps6_b" name="ps6" value="0">
+                            <label for="ps6_b">Moderate (e.g., most endotherms)</label>
+                        </div>
+                          <div class="option">
+                            <input type="radio" id="ps6_c" name="ps6" value="-1">
+                            <label for="ps6_b">Low (i.e. ectotherms) </label>
+                        </div>
+                    </div>
+                    <div class="uncertainty-section">
+                        <div class="uncertainty-title">Information is...</div>
+                        <div class="uncertainty-options">
+                            <div class="uncertainty-option">
+                                <input type="radio" id="ps6_unc_a" name="ps6_uncertainty" value="0">
+                                <label for="ps6_unc_a">Adequate</label>
+                            </div>
+                            <div class="uncertainty-option">
+                                <input type="radio" id="ps6_unc_b" name="ps6_uncertainty" value="1">
+                                <label for="ps6_unc_b">Not adequate or conflicting</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <!-- PHENOLOGY CATEGORY -->
+            <div class="category">
+                <div class="category-title">PHENOLOGY</div>
+                
+                <div class="question-container">
+                    <div class="question-text">PH1. Mismatch potential: Cues</div>
+                    <div class="question-description">Does this species use temperature or moisture cues to initiate activities related to fecundity or survival (e.g., hibernation, migration, breeding)?</div>
+                    <div class="options-container">
+                        <div class="option">
+                            <input type="radio" id="ph1_a" name="ph1" value="1">
+                            <label for="ph1_a"> Species primarily use temperature or moisture cues to initiate activities (e.g., some hibernators, aestivators, rainfall breeders)</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="ph1_b" name="ph1" value="0">
+                            <label for="ph1_b">Species does not primarily use temperature or moisture cues OR no cues to predict or initiate activities (e.g., photoperiod or circadian rhythms, resource levels) </label>
+                        </div>
+                    </div>
+                    <div class="uncertainty-section">
+                        <div class="uncertainty-title">Information is...</div>
+                        <div class="uncertainty-options">
+                            <div class="uncertainty-option">
+                                <input type="radio" id="ph1_unc_a" name="ph1_uncertainty" value="0">
+                                <label for="ph1_unc_a">Adequate</label>
+                            </div>
+                            <div class="uncertainty-option">
+                                <input type="radio" id="ph1_unc_b" name="ph1_uncertainty" value="1">
+                                <label for="ph1_unc_b">Not adequate or conflicting</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-container">
+                    <div class="question-text">PH2. Mismatch potential: Event timing</div>
+                    <div class="question-description">Are activities related to species’ fecundity or survival tied to discrete resource peaks (e.g., food, breeding sites) that are expected to change? </div>
+                    <div class="options-container">
+                        <div class="option">
+                            <input type="radio" id="ph2_a" name="ph2" value="1">
+                            <label for="ph2_a">Species’ fitness is tied to discrete resource peaks that are expected to change</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="ph2_b" name="ph2" value="0">
+                            <label for="ph2_b"> Species’ fitness is tied to discrete resource peaks that are NOT expected to change</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="ph2_c" name="ph2" value="-1">
+                            <label for="ph2_c"> No temporal variation in resources or breeds year-round</label>
+                        </div>                            
+                    </div>
+                    <div class="uncertainty-section">
+                        <div class="uncertainty-title">Information is...</div>
+                        <div class="uncertainty-options">
+                            <div class="uncertainty-option">
+                                <input type="radio" id="ph2_unc_a" name="ph2_uncertainty" value="0">
+                                <label for="ph2_unc_a">Adequate</label>
+                            </div>
+                            <div class="uncertainty-option">
+                                <input type="radio" id="ph2_unc_b" name="ph2_uncertainty" value="1">
+                                <label for="ph2_unc_b">Not adequate or conflicting</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-container">
+                    <div class="question-text">PH3. Mismatch potential: Proximity</div>
+                    <div class="question-description">What is the separation in time or space between cues that initiate activities related to survival or fecundity and discrete events that provide critical resources?</div>
+                    <div class="options-container">
+                        <div class="option">
+                            <input type="radio" id="ph3_a" name="ph3" value="1">
+                            <label for="ph3_a">Critical resources occur far in advance or in distant locations from cues or initiation of activity</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="ph3_b" name="ph3" value="0">
+                            <label for="ph3_b">Critical resource does NOT occur far in advance or in distant locations from cues or initiation of activity</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="ph3_c" name="ph3" value="-1">
+                            <label for="ph3_c">Species initiate activities directly from critical resource availability (e.g., opportunistic breeders)</label>
+                        </div>
+                    </div>
+                    <div class="uncertainty-section">
+                        <div class="uncertainty-title">Information is...</div>
+                        <div class="uncertainty-options">
+                            <div class="uncertainty-option">
+                                <input type="radio" id="ph3_unc_a" name="ph3_uncertainty" value="0">
+                                <label for="ph3_unc_a">Adequate</label>
+                            </div>
+                            <div class="uncertainty-option">
+                                <input type="radio" id="ph3_unc_b" name="ph3_uncertainty" value="1">
+                                <label for="ph3_unc_b">Not adequate or conflicting</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-container">
+                    <div class="question-text">PH4. Resilience to timing mismatch</div>
+                    <div class="question-description">Does this species have more than one opportunity to time reproduction to important events?</div>
+                    <div class="options-container">
+                        <div class="option">
+                            <input type="radio" id="ph4_a" name="ph4" value="1">
+                            <label for="ph4_a">Species reproduces once per year or less</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="ph4_b" name="ph4" value="-1">
+                            <label for="ph4_b">Species reproduce more than once per year</label>
+                       </div>
+                    </div>
+                    <div class="uncertainty-section">
+                        <div class="uncertainty-title">Information is...</div>
+                        <div class="uncertainty-options">
+                            <div class="uncertainty-option">
+                                <input type="radio" id="ph4_unc_a" name="ph4_uncertainty" value="0">
+                                <label for="ph4_unc_a">Adequate</label>
+                            </div>
+                            <div class="uncertainty-option">
+                                <input type="radio" id="ph4_unc_b" name="ph4_uncertainty" value="1">
+                                <label for="ph4_unc_b">Not adequate or conflicting</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <!-- INTERACTIONS CATEGORY -->
+            <div class="category">
+                <div class="category-title">BIOTIC INTERACTIONS</div>
+                
+                <div class="question-container">
+                    <div class="question-text">I1. Food resources</div>
+                    <div class="question-description">Are important food resources for this species expected to change?</div>
+                    <div class="options-container">
+                        <div class="option">
+                            <input type="radio" id="i1_a" name="i1" value="1">
+                            <label for="i1_a">Primary food source(s) are expected to be negatively impacted by projected changes</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="i1_b" name="i1" value="0">
+                            <label for="i1_b">Species consumes a variety of prey/forage species OR primary food resource(s) not expected to be impacted by projected changes</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="i1_c" name="i1" value="-1">
+                            <label for="i1_c">Primary food resource(s) expected to be positively impacted by projected changes</label>
+                        </div>
+                    </div>
+                    <div class="uncertainty-section">
+                        <div class="uncertainty-title">Information is...</div>
+                        <div class="uncertainty-options">
+                            <div class="uncertainty-option">
+                                <input type="radio" id="i1_unc_a" name="i1_uncertainty" value="0">
+                                <label for="i1_unc_a">Adequate</label>
+                            </div>
+                            <div class="uncertainty-option">
+                                <input type="radio" id="i1_unc_b" name="i1_uncertainty" value="1">
+                                <label for="i1_unc_b">Not adequate or conflicting</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-container">
+                    <div class="question-text">I2. Predators</div>
+                    <div class="question-description">Are predator populations important for this species expected to change?</div>
+                    <div class="options-container">
+                        <div class="option">
+                            <input type="radio" id="i2_a" name="i2" value="1">
+                            <label for="i2_a"> Primary predator(s) are expected to be positively impacted by projected changes</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="i2_b" name="i2" value="0">
+                            <label for="i2_b"> Preyed upon by a suite of predators OR the primary predator is not expected to be impacted by projected changes OR species has no predators</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="i2_c" name="i2" value="-1">
+                            <label for="i2_c"> Primary predator(s) expected to be negatively impacted by projected changes</label>
+                        </div>                            
+                    </div>
+                    <div class="uncertainty-section">
+                        <div class="uncertainty-title">Information is...</div>
+                        <div class="uncertainty-options">
+                            <div class="uncertainty-option">
+                                <input type="radio" id="i2_unc_a" name="i2_uncertainty" value="0">
+                                <label for="i2_unc_a">Adequate</label>
+                            </div>
+                            <div class="uncertainty-option">
+                                <input type="radio" id="i2_unc_b" name="i2_uncertainty" value="1">
+                                <label for="i2_unc_b">Not adequate or conflicting</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-container">
+                    <div class="question-text">I3.Symbionts</div>
+                    <div class="question-description"> Are populations of symbiotic species expected to change?</div>
+                    <div class="options-container">
+                        <div class="option">
+                            <input type="radio" id="i3_a" name="i3" value="1">
+                            <label for="i3_a">Symbiotic species populations expected to be negatively impacted by projected changes</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="i3_b" name="i3" value="0">
+                            <label for="i3_b">Symbiotic species populations not expected to be impacted by projected changes or no symbionts</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="i3_c" name="i3" value="-1">
+                            <label for="i3_c">Symbiotic species populations expected to be positively impacted by projected changes</label>
+                        </div>
+                    </div>
+                    <div class="uncertainty-section">
+                        <div class="uncertainty-title">Information is...</div>
+                        <div class="uncertainty-options">
+                            <div class="uncertainty-option">
+                                <input type="radio" id="i3_unc_a" name="i3_uncertainty" value="0">
+                                <label for="i3_unc_a">Adequate</label>
+                            </div>
+                            <div class="uncertainty-option">
+                                <input type="radio" id="i3_unc_b" name="i3_uncertainty" value="1">
+                                <label for="i3_unc_b">Not adequate or conflicting</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="question-container">
+                    <div class="question-text">I4. Disease</div>
+                    <div class="question-description">Is prevalence of diseases known to cause widespread mortality or reproductive failure in this species expected to change?</div>
+                    <div class="options-container">
+                        <div class="option">
+                            <input type="radio" id="i4_a" name="i4" value="1">
+                            <label for="i4_a"> Disease prevalence is expected to increase with projected changes</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="i4_b" name="i4" value="0">
+                            <label for="i4_b"> No known effects of expected changes on disease prevalence </label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="i4_c" name="i4" value="-1">
+                            <label for="i4_c"> Disease prevalence is expected to decrease with projected changes</label>
+                        </div>
+                    </div>
+                    <div class="uncertainty-section">
+                        <div class="uncertainty-title">Information is...</div>
+                        <div class="uncertainty-options">
+                            <div class="uncertainty-option">
+                                <input type="radio" id="i4_unc_a" name="i4_uncertainty" value="0">
+                                <label for="i4_unc_a">Adequate</label>
+                            </div>
+                            <div class="uncertainty-option">
+                                <input type="radio" id="i4_unc_b" name="i4_uncertainty" value="1">
+                                <label for="i4_unc_b">Not adequate or conflicting</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="question-container">
+                    <div class="question-text">I5. Competitors</div>
+                    <div class="question-description"> Are populations of important competing species expected to change?</div>
+                    <div class="options-container">
+                        <div class="option">
+                            <input type="radio" id="i5_a" name="i5" value="1">
+                            <label for="i5_a"> Major competitor species are expected to be positively impacted by projected changes</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="i5_b" name="i5" value="0">
+                            <label for="i5_b"> Species has a variety of competitive relationships OR no expected impacts of projected changes in major competitor species</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="i5_c" name="i5" value="-1">
+                            <label for="i5_c"> Competing species are expected to be negatively impacted by projected changes</label>
+                        </div>
+                    </div>
+                    <div class="uncertainty-section">
+                        <div class="uncertainty-title">Information is...</div>
+                        <div class="uncertainty-options">
+                            <div class="uncertainty-option">
+                                <input type="radio" id="i5_unc_a" name="i5_uncertainty" value="0">
+                                <label for="i5_unc_a">Adequate</label>
+                            </div>
+                            <div class="uncertainty-option">
+                                <input type="radio" id="i5_unc_b" name="i5_uncertainty" value="1">
+                                <label for="i5_unc_b">Not adequate or conflicting</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
