@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAVS - Background & Methods</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+```
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f8f9fa;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .header {
+        background: linear-gradient(135deg, #2c5530, #4a7c59);
+        color: white;
+        padding: 30px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .navigation {
+        background: white;
+        margin-bottom: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        padding: 20px;
+    }
+
+    .nav-links {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .nav-link {
+        padding: 10px 20px;
+        background: #f8f9fa;
+        color: #2c5530;
+        text-decoration: none;
+        border-radius: 5px;
+        border: 2px solid transparent;
+        transition: all 0.3s;
+        font-weight: 500;
+    }
+
+    .nav-link:hover {
+        background: #4a7c59;
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .nav-link.active {
+        background: #4a7c59;
+        color: white;
+        border-color: #2c5530;
+    }
+
+    .content {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        margin-bottom: 30px;
+    }
+
+    h1, h2, h3 {
+        color: #2c5530;
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        border-bottom: 2px solid #4a7c59;
+        padding-bottom: 10px;
+        margin-top: 30px;
+    }
+
+    p {
+        margin-bottom: 15px;
+    }
+
+    .formula {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 5px;
+        margin: 15px 0;
+        font-family: monospace;
+        border-left: 4px solid #4a7c59;
+    }
+
+    ul {
+        margin-left: 20px;
+        margin-bottom: 15px;
+    }
+
+    li {
+        margin-bottom: 8px;
+    }
+
+    .highlight {
+        background: #e8f5e8;
+        padding: 15px;
+        border-radius: 5px;
+        margin: 15px 0;
+        border-left: 4px solid #4a7c59;
+    }
+</style>
+```
+
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Background & Methods</h1>
+            <p>Species and Habitat Vulnerability Assessment System</p>
+        </div>
+
+```
+    <nav class="navigation">
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Assessment Tool</a>
+            <a href="background.html" class="nav-link active">Background & Methods</a>
+            <a href="prework.html" class="nav-link">Data Requirements</a>
+            <a href="interpretation.html" class="nav-link">Score Interpretation</a>
+            <a href="examples.html" class="nav-link">Examples & Applications</a>
+        </div>
+    </nav>
+
+    <div class="content">
+        <h1>Background & Methodology</h1>
+
+        <h2>Overall Process</h2>
+        <p>To begin scoring a species, the user selects a target region and time period for climate change projections that is relevant to management goals. The targeted region can be a management unit, an ecoregion, or the entire range of species, but the boundaries for a set of scores cannot encompass disparate climate projections (i.e., multiple estimates of exposure).</p>
+
+        <p>Once selected, the user collects information on projected temperature and precipitation as well as related phenomena such as snowpack, sea level, and disturbance for the target area. Additional projections are also collected for migratory species. Next, the user collects data on the species to be scored from literature or expert sources.</p>
+
+        <div class="highlight">
+            <strong>Key Principle:</strong> Responses relating to situations where a species is expected to benefit from future conditions have a value of <strong>-1</strong> and signify <strong>resilience</strong>. Responses relating to expectations of less favorable situations have a value of <strong>+1</strong> and signify <strong>vulnerability</strong>.
+        </div>
+
+        <h2>Assessment Categories</h2>
+        <p>The SAVS tool evaluates species vulnerability across four key categories:</p>
+
+        <h3>1. Habitat (7 questions)</h3>
+        <p>Examines changes to breeding and non-breeding habitat areas, habitat components, quality, and species' dispersal abilities. Also considers migratory habitat requirements.</p>
+
+        <h3>2. Physiology (6 questions)</h3>
+        <p>Assesses physiological thresholds, temperature-dependent processes, disturbance exposure, activity limitations, resource flexibility, and metabolic requirements.</p>
+
+        <h3>3. Phenology (4 questions)</h3>
+        <p>Evaluates potential mismatches between species cues, timing of critical events, proximity of resources, and reproductive flexibility.</p>
+
+        <h3>4. Biotic Interactions (5 questions)</h3>
+        <p>Considers changes to food resources, predators, symbionts, disease prevalence, and competitors under climate change scenarios.</p>
+
+        <h2>Scoring System</h2>
+        <p>Scores are calculated for each category and overall vulnerability using specific formulas that account for the different number of questions in each category:</p>
+
+        <div class="formula">
+            <strong>Habitat Vulnerability =</strong><br>
+            (Sum positive values × [5/7]) + (Sum negative values × [5/6])
+        </div>
+
+        <div class="formula">
+            <strong>Physiology Vulnerability =</strong><br>
+            (Sum positive values × [5/6]) + (Sum negative values × [1])
+        </div>
+
+        <div class="formula">
+            <strong>Phenology Vulnerability =</strong><br>
+            (Sum positive values × [5/4]) + (Sum negative values × [5/3])
+        </div>
+
+        <div class="formula">
+            <strong>Biotic Interaction Vulnerability =</strong><br>
+            (Sum positive values × [1]) + (Sum negative values × [1])
+        </div>
+
+        <div class="formula">
+            <strong>Overall Vulnerability Score =</strong><br>
+            (Sum positive values × [20/22]) + (Sum negative values × [20/19])
+        </div>
+
+        <h3>Uncertainty Assessment</h3>
+        <p>Each question includes an uncertainty component where users indicate whether information is "adequate" or "not adequate/conflicting." Uncertainty scores are calculated as:</p>
+
+        <div class="formula">
+            <strong>Uncertainty Score =</strong> Sum of uncertainty values / Total number of questions
+        </div>
+
+        <h2>Score Ranges and Interpretation</h2>
+        <ul>
+            <li><strong>Overall Score Range:</strong> -20 to +20</li>
+            <li><strong>Category Score Range:</strong> -5 to +5</li>
+            <li><strong>Positive scores:</strong> Indicate vulnerability to climate change</li>
+            <li><strong>Negative scores:</strong> Indicate resilience to climate change</li>
+            <li><strong>Zero or near-zero:</strong> Neutral effects or balanced impacts</li>
+        </ul>
+
+        <div class="highlight">
+            <strong>Important Note:</strong> Although the scoring system uses a linear scale for multispecies comparisons, this does not translate to a linear biological effect. Maximum or minimum scores are unlikely because some criteria only apply to certain species and traits reflect both resilience and vulnerability.
+        </div>
+
+        <h2>Quality Considerations</h2>
+        <p>Uncertainty scores should be taken into account when interpreting results. A high uncertainty paired with a neutral score may indicate a lack of information rather than a realized neutral effect of climate change. Species with high uncertainty scores may be good candidates for further research and monitoring.</p>
+    </div>
+</div>
+```
+
+</body>
+</html>
