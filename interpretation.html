@@ -106,7 +106,7 @@
         margin-bottom: 8px;
     }
 
-    .data-category {
+    .score-range {
         background: #f8f9fa;
         padding: 20px;
         border-radius: 8px;
@@ -114,10 +114,23 @@
         border-left: 4px solid #4a7c59;
     }
 
-    .question-reference {
-        font-style: italic;
-        color: #666;
-        font-size: 0.9em;
+    .score-range h3 {
+        margin-bottom: 15px;
+    }
+
+    .vulnerable {
+        border-left-color: #d73027;
+        background: #ffeaea;
+    }
+
+    .neutral {
+        border-left-color: #666;
+        background: #f5f5f5;
+    }
+
+    .resilient {
+        border-left-color: #4a7c59;
+        background: #e8f5e8;
     }
 
     .highlight {
@@ -128,13 +141,59 @@
         border-left: 4px solid #4a7c59;
     }
 
-    .checklist {
+    .warning {
         background: #fff3cd;
         padding: 15px;
         border-radius: 5px;
         margin: 15px 0;
         border-left: 4px solid #ffc107;
+        color: #856404;
     }
+
+    .example-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+    }
+
+    .example-table th,
+    .example-table td {
+        padding: 12px;
+        text-align: left;
+        border: 1px solid #ddd;
+    }
+
+    .example-table th {
+        background: #f8f9fa;
+        font-weight: 600;
+        color: #2c5530;
+    }
+
+    .example-table tr:nth-child(even) {
+        background: #f9f9f9;
+    }
+
+    .uncertainty-bar {
+        display: inline-block;
+        width: 100px;
+        height: 10px;
+        background: #e9ecef;
+        border-radius: 5px;
+        position: relative;
+        margin-left: 10px;
+    }
+
+    .uncertainty-fill {
+        height: 100%;
+        border-radius: 5px;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .uncertainty-low { background: #28a745; }
+    .uncertainty-medium { background: #ffc107; }
+    .uncertainty-high { background: #dc3545; }
 </style>
 ```
 
@@ -142,8 +201,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>TBD</h1>
-            <p>TBDl</p>
+            <h1>Score Interpretation</h1>
+            <p>Understanding Your SAVS Results</p>
         </div>
 
 ```
@@ -151,50 +210,201 @@
         <div class="nav-links">
             <a href="index.html" class="nav-link">Assessment Tool</a>
             <a href="background.html" class="nav-link">Background & Methods</a>
-            <a href="prework.html" class="nav-link active">Data Requirements</a>
-            <a href="interpretation.html" class="nav-link">Score Interpretation</a>
+            <a href="prework.html" class="nav-link">Data Requirements</a>
+            <a href="interpretation.html" class="nav-link active">Score Interpretation</a>
             <a href="examples.html" class="nav-link">Examples & Applications</a>
         </div>
     </nav>
 
     <div class="content">
-        <h1>Score Interpretation</h1>
+        <h1>Understanding SAVS Scores</h1>
 
         <div class="highlight">
-            <strong>Before using the SAVS tool:</strong> Gather comprehensive climate projections and natural history data for your target species and region. This preparation is essential for accurate vulnerability assessment.
+            <strong>Key Principle:</strong> SAVS scores reflect the balance between vulnerable traits (positive scores) and resilient traits (negative scores) that a species possesses in relation to projected climate changes.
         </div>
 
-        <h2>Climate Change Scenarios</h2>
-        <div class="data-category">
-            <h3>Required Climate Data <span class="question-reference">(applies to all questions)</span></h3>
+        <h2>Score Ranges and Meaning</h2>
+
+        <h3>Overall Vulnerability Score</h3>
+        <p>The overall score ranges from <strong>-20 (highly resilient)</strong> to <strong>+20 (highly vulnerable)</strong> and represents the composite assessment across all categories.</p>
+
+        <div class="score-range vulnerable">
+            <h3>High Vulnerability (+5 to +20)</h3>
+            <p>Species faces significant climate change risks across multiple categories. Priority for conservation action and adaptive management strategies.</p>
             <ul>
-                <li><strong>Precipitation Changes:</strong> Total annual and seasonal precipitation projections</li>
-                <li><strong>Temperature Changes:</strong> Average temperatures (day and night), maximum summer temperatures, minimum winter temperatures</li>
-                <li><strong>Snow and Frost:</strong> Changes to snowpack duration and amount, number of frost days</li>
-                <li><strong>Extreme Events:</strong> Projected drought duration and frequency, flooding potential and timing</li>
-                <li><strong>Disturbances:</strong> Changes in frequency, severity, extent, or timing of:
-                    <ul>
-                        <li>Fire disturbances</li>
-                        <li>Extreme weather events (storms, heat waves)</li>
-                    </ul>
-                </li>
+                <li>Multiple vulnerable traits identified</li>
+                <li>Few compensating resilient characteristics</li>
+                <li>Immediate attention recommended</li>
             </ul>
         </div>
 
-        <h2>Natural History Data by Category</h2>
-
-        <div class="data-category">
-            <h3>Habitat Data <span class="question-reference">(Questions H1-H7)</span></h3>
+        <div class="score-range vulnerable">
+            <h3>Moderate Vulnerability (+1 to +4.9)</h3>
+            <p>Species may face some climate change impacts but also possesses some resilient traits.</p>
             <ul>
-                <li><strong>Habitat Types:</strong> Breeding and non-breeding habitats, vegetation type associations <span class="question-reference">(H1, H2)</span></li>
-                <li><strong>Habitat Components:</strong> Specific components required for breeding and survival <span class="question-reference">(H3, H4)</span></li>
-                <li><strong>Habitat Quality:</strong> Features associated with improved breeding success or survival <span class="question-reference">(H5)</span></li>
-                <li><strong>Dispersal:</strong> Dispersal ability and sex-biased dispersal patterns <span class="question-reference">(H6)</span></li>
-                <li><strong>Migration:</strong> Migration habits and requirements <span class="question-reference">(H7)</span></li>
-                <li><strong>Climate Projections:</strong> Vegetation-specific climate projections including disturbance processes</li>
+                <li>Mixed vulnerable and resilient characteristics</li>
+                <li>Monitor closely for emerging impacts</li>
+                <li>Consider proactive management</li>
             </ul>
         </div>
 
-        <div class="data-category">
-            <h3>Physiology Data
+        <div class="score-range neutral">
+            <h3>Neutral Impact (-0.9 to +0.9)</h3>
+            <p>Balanced or minimal climate change effects expected. May indicate mixed impacts or insufficient data.</p>
+            <ul>
+                <li>Equal vulnerable and resilient traits</li>
+                <li>Effects may vary by location or scenario</li>
+                <li>Review uncertainty scores carefully</li>
+            </ul>
+        </div>
+
+        <div class="score-range resilient">
+            <h3>Moderate Resilience (-1 to -4.9)</h3>
+            <p>Species may benefit from some climate changes and possesses adaptive traits.</p>
+            <ul>
+                <li>More resilient than vulnerable traits</li>
+                <li>May benefit from changing conditions</li>
+                <li>Continue monitoring for unexpected impacts</li>
+            </ul>
+        </div>
+
+        <div class="score-range resilient">
+            <h3>High Resilience (-5 to -20)</h3>
+            <p>Species is likely to benefit from climate change with many adaptive characteristics.</p>
+            <ul>
+                <li>Multiple resilient traits identified</li>
+                <li>Few vulnerable characteristics</li>
+                <li>May expand range or increase populations</li>
+            </ul>
+        </div>
+
+        <h2>Category Scores</h2>
+
+        <p>Each category (Habitat, Physiology, Phenology, Biotic Interactions) is scaled from <strong>-5 to +5</strong> to facilitate comparison across categories despite different numbers of questions.</p>
+
+        <table class="example-table">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Focus</th>
+                    <th>Management Implications</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Habitat</strong></td>
+                    <td>Breeding/non-breeding areas, habitat quality, dispersal ability</td>
+                    <td>Habitat protection, corridor creation, assisted migration</td>
+                </tr>
+                <tr>
+                    <td><strong>Physiology</strong></td>
+                    <td>Temperature/moisture tolerance, disturbance exposure</td>
+                    <td>Captive breeding, translocation, microhabitat management</td>
+                </tr>
+                <tr>
+                    <td><strong>Phenology</strong></td>
+                    <td>Timing mismatches, cue-resource relationships</td>
+                    <td>Resource timing management, monitoring programs</td>
+                </tr>
+                <tr>
+                    <td><strong>Biotic Interactions</strong></td>
+                    <td>Food, predators, competitors, disease, symbionts</td>
+                    <td>Ecosystem management, invasive species control</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Uncertainty Scores</h2>
+
+        <p>Uncertainty scores range from <strong>0% (all information adequate)</strong> to <strong>100% (all information inadequate or conflicting)</strong>.</p>
+
+        <div class="score-range">
+            <h3>Low Uncertainty (0-33%) <span class="uncertainty-bar"><span class="uncertainty-fill uncertainty-low" style="width: 33%"></span></span></h3>
+            <p>High confidence in assessment results. Information is adequate and consistent across sources.</p>
+        </div>
+
+        <div class="score-range">
+            <h3>Moderate Uncertainty (34-66%) <span class="uncertainty-bar"><span class="uncertainty-fill uncertainty-medium" style="width: 66%"></span></span></h3>
+            <p>Some information gaps or conflicting data. Results should be interpreted cautiously.</p>
+        </div>
+
+        <div class="score-range">
+            <h3>High Uncertainty (67-100%) <span class="uncertainty-bar"><span class="uncertainty-fill uncertainty-high" style="width: 100%"></span></span></span></h3>
+            <p>Major information gaps or highly conflicting data. Results may not be reliable.</p>
+        </div>
+
+        <div class="warning">
+            <h3>⚠️ Important Uncertainty Considerations</h3>
+            <ul>
+                <li><strong>High uncertainty + neutral scores</strong> may indicate lack of information rather than true neutral effects</li>
+                <li><strong>High uncertainty species</strong> are good candidates for additional research and monitoring</li>
+                <li><strong>Management decisions</strong> based on high-uncertainty assessments should be adaptive and revisable</li>
+            </ul>
+        </div>
+
+        <h2>Interpreting Combined Results</h2>
+
+        <h3>Score-Uncertainty Matrix</h3>
+        <table class="example-table">
+            <thead>
+                <tr>
+                    <th>Vulnerability Score</th>
+                    <th>Low Uncertainty</th>
+                    <th>High Uncertainty</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>High Vulnerability (+)</strong></td>
+                    <td>Priority for immediate conservation action</td>
+                    <td>Gather more data, implement precautionary measures</td>
+                </tr>
+                <tr>
+                    <td><strong>Neutral (0)</strong></td>
+                    <td>Monitor for emerging impacts</td>
+                    <td>Major research priority - insufficient data</td>
+                </tr>
+                <tr>
+                    <td><strong>High Resilience (-)</strong></td>
+                    <td>Low conservation priority, monitor for surprises</td>
+                    <td>Verify resilience assumptions with targeted research</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Important Limitations</h2>
+
+        <div class="warning">
+            <h3>Remember These Key Points:</h3>
+            <ul>
+                <li><strong>Linear Scale ≠ Linear Biology:</strong> Although scores use a linear scale, biological responses to climate change are often non-linear</li>
+                <li><strong>Maximum/Minimum Unlikely:</strong> Extreme scores are rare because some criteria only apply to certain species</li>
+                <li><strong>Regional Variation:</strong> Results are specific to the target region and time period assessed</li>
+                <li><strong>Scenario Dependent:</strong> Results depend on the climate projections used</li>
+                <li><strong>Multiple Assessments:</strong> Consider conducting assessments for different regions or scenarios</li>
+            </ul>
+        </div>
+
+        <h2>Using Results for Conservation</h2>
+
+        <div class="highlight">
+            <h3>Applications Include:</h3>
+            <ul>
+                <li><strong>Species Prioritization:</strong> Rank vulnerability across multiple species</li>
+                <li><strong>Management Planning:</strong> Target specific categories showing high vulnerability</li>
+                <li><strong>Research Direction:</strong> Identify knowledge gaps needing further study</li>
+                <li><strong>Monitoring Design:</strong> Focus monitoring on most at-risk aspects</li>
+                <li><strong>Adaptive Management:</strong> Plan flexible strategies that can evolve with new information</li>
+            </ul>
+        </div>
+
+        <div class="highlight">
+            <p><strong>Ready to conduct your assessment?</strong> <a href="index.html">Return to Assessment Tool →</a></p>
+            <p><strong>Need examples?</strong> <a href="examples.html">View Example Assessments →</a></p>
+        </div>
+    </div>
+</div>
 ```
+
+</body>
+</html>
