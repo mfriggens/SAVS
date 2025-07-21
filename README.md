@@ -31,7 +31,7 @@ The System for Assessing Vulnerability of Species (SAVS) is a simple and flexibl
 
  RMRS General Technical Report:
 - Bagne, Karen E., Megan M. Friggens, and Deborah M. Finch. "A system for assessing vulnerability of species (SAVS) to climate change." Gen. Tech. Rep. RMRS-GTR-257. Fort Collins, CO: US Department of Agriculture, Forest Service, Rocky Mountain Research Station. 28 p. 257 (2011).
-Sample assessments:
+  Sample assessments:
 - Coe, Sharon J., Deborah M. Finch, and Megan M. Friggens. "An assessment of climate change and the vulnerability of wildlife in the Sky Islands of the Southwest." Gen. Tech. Rep. RMRS-GTR-273. Fort Collins, CO: US Department of Agriculture, Forest Service, Rocky Mountain Research Station. 208 p. 273 (2012).
 - Bagne, Karen E., and Deborah M. Finch. "Vulnerability of species to climate change in the Southwest: threatened, endangered, and at-risk species at the Barry M. Goldwater Range, Arizona." Gen. Tech. Rep. RMRS-GTR-284. Fort Collins, CO: US Department of Agriculture, Forest Service, Rocky Mountain Research Station. 139 p. 284 (2012).
 - Davison, Jennifer E., et al. "Bringing indices of species vulnerability to climate change into geographic space: an assessment across the Coronado national forest." Biodiversity and Conservation 21.1 (2012): 189-204.
