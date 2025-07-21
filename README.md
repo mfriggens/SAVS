@@ -29,7 +29,7 @@ The System for Assessing Vulnerability of Species (SAVS) is a simple and flexibl
 
 ## Resources
 
-- RMRS General Technical Report: "A System for Assessing Vulnerability of Species (SAVS) to Climate Change" (in press)
+- RMRS General Technical Report: "A System for Assessing Vulnerability of Species (SAVS) to Climate Change" Bagne et al. 2011
 - Sample assessments: New Mexico (Friggens et al. 2013) and Arizona (Coe et al. 2012)
 - Legacy project briefs: Fort Huachuca, AZ and Barry M Goldwater Range, AZ
 
