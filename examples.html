@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAVS - Application and Examples</title>
+    <title>SAVS - Examples & Applications</title>
     <style>
         * {
             margin: 0;
@@ -97,15 +97,6 @@
         margin-bottom: 15px;
     }
 
-    .formula {
-        background: #f8f9fa;
-        padding: 15px;
-        border-radius: 5px;
-        margin: 15px 0;
-        font-family: monospace;
-        border-left: 4px solid #4a7c59;
-    }
-
     ul {
         margin-left: 20px;
         margin-bottom: 15px;
@@ -115,12 +106,145 @@
         margin-bottom: 8px;
     }
 
+    .example-species {
+        background: #f8f9fa;
+        padding: 25px;
+        border-radius: 10px;
+        margin: 25px 0;
+        border-left: 5px solid #4a7c59;
+    }
+
+    .species-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .species-name {
+        font-size: 1.3em;
+        font-weight: bold;
+        color: #2c5530;
+    }
+
+    .overall-score {
+        font-size: 1.1em;
+        font-weight: bold;
+        padding: 8px 16px;
+        border-radius: 20px;
+        color: white;
+    }
+
+    .score-vulnerable { background: #d73027; }
+    .score-neutral { background: #666; }
+    .score-resilient { background: #4a7c59; }
+
+    .category-scores {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+        margin: 15px 0;
+    }
+
+    .category-score {
+        background: white;
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .category-name {
+        font-size: 0.9em;
+        color: #666;
+        margin-bottom: 5px;
+    }
+
+    .category-value {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #2c5530;
+    }
+
+    .key-findings {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 15px;
+    }
+
+    .key-findings h4 {
+        color: #2c5530;
+        margin-bottom: 10px;
+    }
+
+    .application-box {
+        background: #e8f5e8;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+        border-left: 4px solid #4a7c59;
+    }
+
+    .use-case {
+        background: #fff3cd;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+        border-left: 4px solid #ffc107;
+    }
+
     .highlight {
         background: #e8f5e8;
         padding: 15px;
         border-radius: 5px;
         margin: 15px 0;
         border-left: 4px solid #4a7c59;
+    }
+
+    .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+        padding: 12px;
+        text-align: left;
+        border: 1px solid #ddd;
+    }
+
+    .comparison-table th {
+        background: #f8f9fa;
+        font-weight: 600;
+        color: #2c5530;
+    }
+
+    .comparison-table tr:nth-child(even) {
+        background: #f9f9f9;
+    }
+
+    .management-strategy {
+        background: #f0f8f0;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+        border-left: 4px solid #28a745;
+    }
+
+    .species-image {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: #ddd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2em;
+        margin-right: 20px;
     }
 </style>
 ```
@@ -129,33 +253,177 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Application and Examples</h1>
-            <p> System for Assessing Species Vulnerability</p>
+            <h1>Examples & Applications</h1>
+            <p>Real-World SAVS Assessments and Use Cases</p>
         </div>
 
 ```
     <nav class="navigation">
         <div class="nav-links">
             <a href="index.html" class="nav-link">Assessment Tool</a>
-            <a href="background.html" class="nav-link active">Background & Methods</a>
+            <a href="background.html" class="nav-link">Background & Methods</a>
             <a href="prework.html" class="nav-link">Data Requirements</a>
             <a href="interpretation.html" class="nav-link">Score Interpretation</a>
-            <a href="examples.html" class="nav-link">Examples & Applications</a>
+            <a href="examples.html" class="nav-link active">Examples & Applications</a>
         </div>
     </nav>
 
     <div class="content">
-        <h1>Application and Examples</h1>
+        <h1>Example Species Assessments</h1>
 
-        <h2>Application of Results </h2>
-        <p>*Scores can be used to rank species by vulnerability and identify those which may require attention to prevent declines.</p>
+        <p>The following examples demonstrate how SAVS can be applied to different types of species and the insights it provides for conservation planning.</p>
 
-        <p>*Scores can help identify areas and issues of greatest vulnerability for single species and inform the development of effective management strategies.</p>
-        <p>*Scores may also be used to identify groups of species with similar vulnerabilities that may benefit from the same management action.</p>
-        <p>*Add climate change vulnerability scores to current species assessments or management plans to improve identification of conservation targets.</p>
-         <p>*Scores and scoring process may be used to initiate dialogue on climate change challenges and solutions for species' management.</p>
-       </div>
+        <div class="example-species">
+            <div class="species-header">
+                <div>
+                    <div class="species-name">🦅 Northern Spotted Owl</div>
+                    <em>Strix occidentalis caurina</em> | Pacific Northwest, USA
+                </div>
+                <div class="overall-score score-vulnerable">+8.2 Vulnerable</div>
+            </div>
+            
+            <div class="category-scores">
+                <div class="category-score">
+                    <div class="category-name">Habitat</div>
+                    <div class="category-value">+3.1</div>
+                </div>
+                <div class="category-score">
+                    <div class="category-name">Physiology</div>
+                    <div class="category-value">+1.8</div>
+                </div>
+                <div class="category-score">
+                    <div class="category-name">Phenology</div>
+                    <div class="category-value">+2.1</div>
+                </div>
+                <div class="category-score">
+                    <div class="category-name">Biotic</div>
+                    <div class="category-value">+1.2</div>
+                </div>
+            </div>
+
+            <div class="key-findings">
+                <h4>Key Findings:</h4>
+                <ul>
+                    <li><strong>Habitat vulnerability:</strong> Old-growth forest habitat declining due to increased fire frequency and drought stress</li>
+                    <li><strong>Limited dispersal:</strong> Poor ability to colonize new areas as habitat shifts</li>
+                    <li><strong>Phenology mismatch:</strong> Breeding timing may become misaligned with prey species emergence</li>
+                    <li><strong>Uncertainty:</strong> 35% - moderate uncertainty in climate impact projections</li>
+                </ul>
+            </div>
+
+            <div class="management-strategy">
+                <h4>🎯 Management Implications:</h4>
+                <p><strong>Priority Actions:</strong> Habitat connectivity corridors, assisted migration trials, fire management in key breeding areas</p>
+            </div>
+        </div>
+
+        <div class="example-species">
+            <div class="species-header">
+                <div>
+                    <div class="species-name">🦆 American Black Duck</div>
+                    <em>Anas rubripes</em> | Atlantic Coast, USA/Canada
+                </div>
+                <div class="overall-score score-neutral">-0.3 Neutral</div>
+            </div>
+            
+            <div class="category-scores">
+                <div class="category-score">
+                    <div class="category-name">Habitat</div>
+                    <div class="category-value">+1.2</div>
+                </div>
+                <div class="category-score">
+                    <div class="category-name">Physiology</div>
+                    <div class="category-value">-1.8</div>
+                </div>
+                <div class="category-score">
+                    <div class="category-name">Phenology</div>
+                    <div class="category-value">-0.5</div>
+                </div>
+                <div class="category-score">
+                    <div class="category-name">Biotic</div>
+                    <div class="category-value">+0.8</div>
+                </div>
+            </div>
+
+            <div class="key-findings">
+                <h4>Key Findings:</h4>
+                <ul>
+                    <li><strong>Mixed impacts:</strong> Sea level rise threatens coastal breeding areas, but species benefits from longer ice-free seasons</li>
+                    <li><strong>High mobility:</strong> Strong dispersal ability allows adaptation to shifting habitat</li>
+                    <li><strong>Physiological advantage:</strong> Broad thermal tolerance and flexible activity patterns</li>
+                    <li><strong>Uncertainty:</strong> 45% - conflicting information on habitat change impacts</li>
+                </ul>
+            </div>
+
+            <div class="management-strategy">
+                <h4>🎯 Management Implications:</h4>
+                <p><strong>Priority Actions:</strong> Monitor population trends closely, protect inland breeding alternatives, research habitat use changes</p>
+            </div>
+        </div>
+
+        <div class="example-species">
+            <div class="species-header">
+                <div>
+                    <div class="species-name">🦋 Monarch Butterfly</div>
+                    <em>Danaus plexippus</em> | Eastern North America
+                </div>
+                <div class="overall-score score-vulnerable">+12.7 Vulnerable</div>
+            </div>
+            
+            <div class="category-scores">
+                <div class="category-score">
+                    <div class="category-name">Habitat</div>
+                    <div class="category-value">+4.2</div>
+                </div>
+                <div class="category-score">
+                    <div class="category-name">Physiology</div>
+                    <div class="category-value">+2.8</div>
+                </div>
+                <div class="category-score">
+                    <div class="category-name">Phenology</div>
+                    <div class="category-value">+3.9</div>
+                </div>
+                <div class="category-score">
+                    <div class="category-name">Biotic</div>
+                    <div class="category-value">+1.8</div>
+                </div>
+            </div>
+
+            <div class="key-findings">
+                <h4>Key Findings:</h4>
+                <ul>
+                    <li><strong>Complex migration:</strong> Requires multiple transitional habitats across vast geographic range</li>
+                    <li><strong>Extreme phenology risk:</strong> Migration timing highly sensitive to temperature cues</li>
+                    <li><strong>Specialist diet:</strong> Dependent on milkweed plants that face climate stress</li>
+                    <li><strong>Uncertainty:</strong> 25% - well-studied species with good data availability</li>
+                </ul>
+            </div>
+
+            <div class="management-strategy">
+                <h4>🎯 Management Implications:</h4>
+                <p><strong>Priority Actions:</strong> Landscape-scale milkweed habitat restoration, international coordination of conservation efforts, climate-adapted habitat management</p>
+            </div>
+        </div>
+
+        <div class="example-species">
+            <div class="species-header">
+                <div>
+                    <div class="species-name">🐢 Painted Turtle</div>
+                    <em>Chrysemys picta</em> | Great Lakes Region
+                </div>
+                <div class="overall-score score-resilient">-4.1 Resilient</div>
+            </div>
+            
+            <div class="category-scores">
+                <div class="category-score">
+                    <div class="category-name">Habitat</div>
+                    <div class="category-value">-1.2</div>
+                </div>
+                <div class="category-score">
+                    <div class="category-name">Physiology</div>
+                    <div class="category-value">-2.1</div>
+                </div>
+                <div class="category-score">
+                    <div class="category-name">Phenology</div>
 ```
 
-</body>
-</html>
