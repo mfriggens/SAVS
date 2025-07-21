@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Species and Habitat Vulnerability Assessment System (SAVS)</title>
+    <title>System for Assessing Species Vulnerability(SAVS)</title>
     <style>
         * {
             margin: 0;
@@ -44,6 +44,50 @@
     .header p {
         font-size: 1.1em;
         opacity: 0.9;
+    }
+
+    .navigation {
+        background: white;
+        margin-bottom: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        padding: 20px;
+    }
+
+    .nav-container h2 {
+        color: #2c5530;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .nav-links {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .nav-link {
+        padding: 10px 20px;
+        background: #f8f9fa;
+        color: #2c5530;
+        text-decoration: none;
+        border-radius: 5px;
+        border: 2px solid transparent;
+        transition: all 0.3s;
+        font-weight: 500;
+    }
+
+    .nav-link:hover {
+        background: #4a7c59;
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .nav-link.active {
+        background: #4a7c59;
+        color: white;
+        border-color: #2c5530;
     }
 
     .category {
@@ -321,7 +365,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Species and Habitat Vulnerability Assessment System</h1>
+            <h1>System for Assessing Species Vulnerability</h1>
             <p>Climate Change Vulnerability Assessment Tool</p>
         </div>
 
@@ -754,6 +798,8 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        
             <!-- PHENOLOGY CATEGORY -->
             <div class="category">
                 <div class="category-title">PHENOLOGY</div>
@@ -877,6 +923,8 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            
             <!-- INTERACTIONS CATEGORY -->
             <div class="category">
                 <div class="category-title">BIOTIC INTERACTIONS</div>
@@ -1040,3 +1088,294 @@
                         </div>
                     </div>
                 </div>
+            </div>
+ </form>
+
+    <div class="controls">
+        <button type="button" class="btn btn-primary" onclick="calculateScores()">Calculate Vulnerability Scores</button>
+        <button type="button" class="btn btn-secondary" onclick="resetForm()">Reset Form</button>
+    </div>
+
+    <div id="results" class="results hidden">
+        <h2>Vulnerability Assessment Results</h2>
+        
+        <table class="scores-table">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Score</th>
+                    <th>Uncertainty</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Habitat</td>
+                    <td id="habitat-score">-</td>
+                    <td id="habitat-uncertainty">-</td>
+                </tr>
+                <tr>
+                    <td>Physiology</td>
+                    <td id="physiology-score">-</td>
+                    <td id="physiology-uncertainty">-</td>
+                </tr>
+                <tr>
+                    <td>Phenology</td>
+                    <td id="phenology-score">-</td>
+                    <td id="phenology-uncertainty">-</td>
+                </tr>
+                <tr>
+                    <td>Biotic Interactions</td>
+                    <td id="biotic-score">-</td>
+                    <td id="biotic-uncertainty">-</td>
+                </tr>
+                <tr style="font-weight: bold; background: #f8f9fa;">
+                    <td>Overall Vulnerability</td>
+                    <td id="overall-score">-</td>
+                    <td id="overall-uncertainty">-</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="chart-container">
+            <div class="chart-title">Categorical Vulnerability Scores</div>
+            <div class="chart" id="vulnerability-chart">
+                <div class="chart-axis">
+                    <div class="chart-axis-label">0</div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 10px; font-size: 0.9em; color: #666;">
+                Range: -5 (Resilient) to +5 (Vulnerable)
+            </div>
+        </div>
+
+        <div class="interpretation">
+            <h3>Score Interpretation</h3>
+            <p><strong>Positive scores (+)</strong> indicate vulnerability - the species may be negatively affected by climate change in this category.</p>
+            <p><strong>Negative scores (-)</strong> indicate resilience - the species may benefit from or be less affected by climate change in this category.</p>
+            <p><strong>Scores near zero</strong> suggest neutral effects or mixed impacts.</p>
+            <p><strong>Uncertainty scores</strong> reflect the quality and availability of information. High uncertainty paired with neutral scores may indicate lack of data rather than true neutral effects.</p>
+            <div id="score-interpretation"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function calculateScores() {
+        // Clear any existing error messages
+        document.getElementById('error-container').innerHTML = '';
+        
+        // Define all questions by category
+        const categories = {
+            habitat: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7'],
+            physiology: ['ps1', 'ps2', 'ps3', 'ps4', 'ps5', 'ps6'],
+            phenology: ['ph1', 'ph2', 'ph3', 'ph4'],
+            biotic: ['i1', 'i2', 'i3', 'i4', 'i5']
+        };
+        
+        // Check if all questions are answered
+        let unansweredQuestions = [];
+        let allQuestions = [...categories.habitat, ...categories.physiology, ...categories.phenology, ...categories.biotic];
+        
+        for (let question of allQuestions) {
+            let answered = document.querySelector(`input[name="${question}"]:checked`);
+            let uncertaintyAnswered = document.querySelector(`input[name="${question}_uncertainty"]:checked`);
+            
+            if (!answered) {
+                unansweredQuestions.push(question.toUpperCase());
+            }
+            if (!uncertaintyAnswered) {
+                unansweredQuestions.push(question.toUpperCase() + ' uncertainty');
+            }
+        }
+        
+        if (unansweredQuestions.length > 0) {
+            document.getElementById('error-container').innerHTML = `
+                <div class="error-message">
+                    <strong>Please answer all questions before calculating scores.</strong><br>
+                    Missing answers for: ${unansweredQuestions.join(', ')}
+                </div>
+            `;
+            return;
+        }
+        
+        // Calculate scores for each category
+        let scores = {};
+        let uncertainties = {};
+        
+        // Calculate category scores using the specific formulas
+        scores.habitat = calculateCategoryScore(categories.habitat, 5/7, 5/6);
+        scores.physiology = calculateCategoryScore(categories.physiology, 5/6, 1);
+        scores.phenology = calculateCategoryScore(categories.phenology, 5/4, 5/3);
+        scores.biotic = calculateCategoryScore(categories.biotic, 1, 1);
+        
+        // Calculate overall score
+        scores.overall = calculateCategoryScore(allQuestions, 20/22, 20/19);
+        
+        // Calculate uncertainty scores
+        uncertainties.habitat = calculateUncertainty(categories.habitat);
+        uncertainties.physiology = calculateUncertainty(categories.physiology);
+        uncertainties.phenology = calculateUncertainty(categories.phenology);
+        uncertainties.biotic = calculateUncertainty(categories.biotic);
+        uncertainties.overall = calculateUncertainty(allQuestions);
+        
+        // Display results
+        displayResults(scores, uncertainties);
+        
+        // Scroll to results
+        document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function calculateCategoryScore(questions, positiveMultiplier, negativeMultiplier) {
+        let positiveSum = 0;
+        let negativeSum = 0;
+        
+        for (let question of questions) {
+            let answer = document.querySelector(`input[name="${question}"]:checked`);
+            if (answer) {
+                let value = parseInt(answer.value);
+                if (value > 0) {
+                    positiveSum += value;
+                } else if (value < 0) {
+                    negativeSum += value;
+                }
+            }
+        }
+        
+        return (positiveSum * positiveMultiplier) + (negativeSum * negativeMultiplier);
+    }
+
+    function calculateUncertainty(questions) {
+        let uncertaintySum = 0;
+        let totalQuestions = questions.length;
+        
+        for (let question of questions) {
+            let uncertainty = document.querySelector(`input[name="${question}_uncertainty"]:checked`);
+            if (uncertainty) {
+                uncertaintySum += parseInt(uncertainty.value);
+            }
+        }
+        
+        return uncertaintySum / totalQuestions;
+    }
+
+    function displayResults(scores, uncertainties) {
+        // Update score table
+        document.getElementById('habitat-score').textContent = scores.habitat.toFixed(2);
+        document.getElementById('physiology-score').textContent = scores.physiology.toFixed(2);
+        document.getElementById('phenology-score').textContent = scores.phenology.toFixed(2);
+        document.getElementById('biotic-score').textContent = scores.biotic.toFixed(2);
+        document.getElementById('overall-score').textContent = scores.overall.toFixed(2);
+        
+        document.getElementById('habitat-uncertainty').textContent = (uncertainties.habitat * 100).toFixed(0) + '%';
+        document.getElementById('physiology-uncertainty').textContent = (uncertainties.physiology * 100).toFixed(0) + '%';
+        document.getElementById('phenology-uncertainty').textContent = (uncertainties.phenology * 100).toFixed(0) + '%';
+        document.getElementById('biotic-uncertainty').textContent = (uncertainties.biotic * 100).toFixed(0) + '%';
+        document.getElementById('overall-uncertainty').textContent = (uncertainties.overall * 100).toFixed(0) + '%';
+        
+        // Create chart
+        createChart(scores);
+        
+        // Add detailed interpretation
+        createInterpretation(scores, uncertainties);
+        
+        // Show results
+        document.getElementById('results').classList.remove('hidden');
+    }
+
+    function createChart(scores) {
+        const chartContainer = document.getElementById('vulnerability-chart');
+        const chartData = [
+            { name: 'Habitat', score: scores.habitat },
+            { name: 'Physiology', score: scores.physiology },
+            { name: 'Phenology', score: scores.phenology },
+            { name: 'Biotic', score: scores.biotic }
+        ];
+        
+        // Clear existing chart
+        chartContainer.innerHTML = '<div class="chart-axis"><div class="chart-axis-label">0</div></div>';
+        
+        chartData.forEach(item => {
+            const bar = document.createElement('div');
+            bar.className = 'chart-bar';
+            
+            // Calculate height (scale -5 to +5 range to 0-100% of chart height)
+            const height = Math.abs(item.score) / 5 * 140; // 140px is roughly half chart height
+            bar.style.height = height + 'px';
+            
+            // Position bar (positive scores go up, negative go down)
+            if (item.score >= 0) {
+                bar.style.bottom = '150px'; // Start from middle
+            } else {
+                bar.style.bottom = (150 - height) + 'px'; // Go down from middle
+                bar.classList.add('negative');
+            }
+            
+            // Add label and value
+            const label = document.createElement('div');
+            label.className = 'chart-label';
+            label.textContent = item.name;
+            bar.appendChild(label);
+            
+            const value = document.createElement('div');
+            value.className = 'chart-value';
+            value.textContent = item.score.toFixed(1);
+            bar.appendChild(value);
+            
+            chartContainer.appendChild(bar);
+        });
+    }
+
+    function createInterpretation(scores, uncertainties) {
+        const interpretationDiv = document.getElementById('score-interpretation');
+        let interpretation = '<h4>Specific Findings:</h4><ul>';
+        
+        // Overall assessment
+        if (scores.overall > 2) {
+            interpretation += '<li><strong>High vulnerability</strong> - This species faces significant climate change risks.</li>';
+        } else if (scores.overall > 0.5) {
+            interpretation += '<li><strong>Moderate vulnerability</strong> - This species may face some climate change impacts.</li>';
+        } else if (scores.overall > -0.5) {
+            interpretation += '<li><strong>Neutral impact</strong> - Mixed or minimal climate change effects expected.</li>';
+        } else if (scores.overall > -2) {
+            interpretation += '<li><strong>Moderate resilience</strong> - This species may benefit from some climate changes.</li>';
+        } else {
+            interpretation += '<li><strong>High resilience</strong> - This species is likely to benefit from climate change.</li>';
+        }
+        
+        // Category-specific insights
+        const categories = [
+            { name: 'Habitat', score: scores.habitat, uncertainty: uncertainties.habitat },
+            { name: 'Physiology', score: scores.physiology, uncertainty: uncertainties.physiology },
+            { name: 'Phenology', score: scores.phenology, uncertainty: uncertainties.phenology },
+            { name: 'Biotic Interactions', score: scores.biotic, uncertainty: uncertainties.biotic }
+        ];
+        
+        categories.forEach(cat => {
+            if (Math.abs(cat.score) > 1) {
+                const direction = cat.score > 0 ? 'vulnerable' : 'resilient';
+                const strength = Math.abs(cat.score) > 2 ? 'highly' : 'moderately';
+                interpretation += `<li><strong>${cat.name}:</strong> ${strength} ${direction}`;
+                if (cat.uncertainty > 0.5) {
+                    interpretation += ' (high uncertainty - consider additional research)';
+                }
+                interpretation += '</li>';
+            }
+        });
+        
+        interpretation += '</ul>';
+        interpretationDiv.innerHTML = interpretation;
+    }
+
+    function resetForm() {
+        if (confirm('Are you sure you want to reset all answers? This cannot be undone.')) {
+            document.getElementById('savs-form').reset();
+            document.getElementById('results').classList.add('hidden');
+            document.getElementById('error-container').innerHTML = '';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }
+</script>
+```
+
+</body>
+</html>
